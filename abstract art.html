@@ -15,8 +15,44 @@ var canvas;
 var context;
 var particles;
 var timer;
+var timerBegin;
 var timerRestart;
-var text = 'Before time began...'
+
+function beginStory(){
+	context.font = '40px Helvetica';            
+	context.strokeText('Before time began...', 10, 100);
+	context.fillStyle = '#5c5656';  
+	context.fillText('Before time began...', 10, 100);
+	context.font = '40px Helvetica';            
+	context.strokeText('Before spirits and life existed..', 10, 500);
+	context.fillStyle = '#5c5656';  
+	context.fillText('Before spirits and life existed..', 10, 500);
+	//power
+	context.fillStyle="#312801";
+	context.beginPath();
+	context.moveTo((canvas.width/2)-100,(canvas.height)-350);
+	context.lineTo((canvas.width/2),(canvas.height)-450);
+	context.lineTo((canvas.width/2)+100,(canvas.height)-350);
+	context.closePath();
+	context.fill();
+	//wisdom
+	context.fillStyle="#fbc41a";
+	context.beginPath();
+	context.moveTo((canvas.width/2)-200,(canvas.height)-250);
+	context.lineTo((canvas.width/2)-100,(canvas.height)-350);
+	context.lineTo((canvas.width/2),(canvas.height)-250);
+	context.closePath();
+	context.fill();
+	//courage
+	context.fillStyle="#a78804";
+	context.beginPath();
+	context.moveTo((canvas.width/2),(canvas.height)-250);
+	context.lineTo((canvas.width/2)+100,(canvas.height)-350);
+	context.lineTo((canvas.width/2)+200,(canvas.height)-250);
+	context.closePath();
+	context.fill();
+}
+
 function makeParticles() {
 	//create an array of particles for our animation
 	particles = [];
@@ -40,7 +76,7 @@ function makeParticles() {
 	 this.vy = Math.random()*10-5;
 	 var colors = ["#ffa700","#fdf769","#b0a53f","#fff400","white"];
 	 this.color = colors[Math.floor(Math.random()*colors.length)];
-	 this.radius = 30;
+	 this.radius = 20;
  }
  function moveParticles() {
 	 //partially clear the screen to fade previous circles, and draw a new particle at each new coordinate
@@ -65,47 +101,17 @@ function makeParticles() {
 		 if (p.radius < 0) p.radius = 0;
 	 }
  }
-function beginStory(){
-	context.font = '40px Helvetica';            
-	context.strokeText(text, 10, 100);
-	context.fillStyle = '#00FF00';  
-	context.fillText(text, 10, 100);
-}
-function triforce(){
-context.fillStyle="#A2322E";
-context.beginPath();
-context.moveTo((canvas.width/2)-200,(canvas.height)-250);
-context.lineTo((canvas.width/2)-100,(canvas.height)-350);
-context.lineTo((canvas.width/2),(canvas.height)-250);
-context.closePath();
-context.fill();
 
-context.fillStyle="#A2322E";
-context.beginPath();
-context.moveTo((canvas.width/2),(canvas.height)-250);
-context.lineTo((canvas.width/2)+100,(canvas.height)-350);
-context.lineTo((canvas.width/2)+200,(canvas.height)-250);
-context.closePath();
-context.fill();
-
-context.fillStyle="#A2322E";
-context.beginPath();
-context.moveTo((canvas.width/2)-100,(canvas.height)-350);
-context.lineTo((canvas.width/2),(canvas.height)-450);
-context.lineTo((canvas.width/2)+100,(canvas.height)-350);
-context.closePath();
-context.fill();
-
-}
  window.onload = function() {
  	 canvas = document.getElementById('canvas');
 	 context = canvas.getContext('2d');
-	 beginStory();
-	 triforce();
+	 timerBegin = setInterval(beginStory, 100);
 	 makeParticles();
 	 timer = setInterval(moveParticles, 100);
 	 timerRestart = setInterval(makeParticles, 4500);
  }
+ 
+ 
 /*Before time began...
 Before spirits and life existed..
 Three golden goddesses descended 
