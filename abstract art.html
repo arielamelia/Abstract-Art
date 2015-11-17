@@ -19,14 +19,38 @@ var timerBegin;
 var timerRestart;
 
 function beginStory(){
-	context.font = '40px Helvetica';            
-	context.strokeText('Before time began...', 10, 100);
-	context.fillStyle = '#5c5656';  
-	context.fillText('Before time began...', 10, 100);
-	context.font = '40px Helvetica';            
-	context.strokeText('Before spirits and life existed..', 10, 500);
-	context.fillStyle = '#5c5656';  
-	context.fillText('Before spirits and life existed..', 10, 500);
+	context.font = '40px Palatino, serif';            
+	context.strokeText('Before time began...', 220, 100);
+	context.fillStyle = '#242424';  
+	context.fillText('Before time began...', 220, 100);
+	context.font = '40px Palatino, serif';            
+	context.strokeText('Before spirits and life existed...', 150, 500);
+	context.fillStyle = '#242424';  
+	context.fillText('Before spirits and life existed...', 150, 500);	
+	}
+
+function Depart(){
+	context.font = '40px Palatino, serif';            
+	context.strokeText('Labors completed, the goddesses departed', 50, 100);
+	context.fillStyle = '#242424';  
+	context.fillText('Labors completed, the goddesses departed', 50, 100);
+	context.font = '40px Palatino, serif';
+	context.strokeText('Leaving Golden, Sacred, Triangles', 120, 500);
+	context.fillStyle = '#242424';  
+	context.fillText('Leaving Golden, Sacred, Triangles', 120, 500);
+}	
+	
+function triforce(){
+	context.font = '40px Palatino, serif';
+	context.strokeText('The basis of our world\'s providence', 120, 100);
+	context.fillStyle = '#242424';  
+	context.fillText('The basis of our world\'s providence', 120, 100);
+
+	context.font = '40px Palatino, serif';
+	context.strokeText('Which now rest in the Sacred Realm', 120, 500);
+	context.fillStyle = '#242424';  
+	context.fillText('Which now rest in the Sacred Realm', 120, 500);
+	
 	//power
 	context.fillStyle="#312801";
 	context.beginPath();
@@ -70,8 +94,8 @@ function makeParticles() {
 	 //the constructor for a single particle, with random starting x+y, velocity, color, and radius
 	 //this.x = Math.random()*canvas.width;
 	 //this.y = Math.random()*canvas.height;
-	 this.x = canvas.width/2;
-	 this.y = canvas.height/2;
+	this.x = (canvas.width/2)
+	 this.y = (canvas.height/2)-5;
 	 this.vx = Math.random()*10-5;
 	 this.vy = Math.random()*10-5;
 	 var colors = ["#ffa700","#fdf769","#b0a53f","#fff400","white"];
@@ -93,22 +117,51 @@ function makeParticles() {
 		 context.fill();
 		 p.x += p.vx;
 		 p.y += p.vy;
-		 if(p.x < -50) p.x = canvas.width+50;
-		 if(p.y < -50) p.y = canvas.height+50;
-		 if(p.x > canvas.width+50) p.x = -50;
-		 if(p.y > canvas.height+50) p.y = -50;
-		 p.radius -= 1;
+		
+		 p.radius -= 0.2;
 		 if (p.radius < 0) p.radius = 0;
 	 }
  }
 
+ function Din(){
+ //diamond
+  }
+ function Nayru(){
+ //cloud
+context.fillStyle=("white");
+context.beginPath();
+context.moveTo(0,0);
+context.bezierCurveTo(0,80,800,80,800,0);
+context.stroke();
+context.fill();
+}
+ function Farore(){
+ //star
+ }
+ 
+ function clearScreen(color) {
+	 //clears the screen and fills with the color of choice
+	 context.clearRect(0, 0, canvas.width, canvas.height);
+	 context.fillStyle = white;
+	 context.fillRect(0, 0, canvas.width, canvas.height);
+ }
+ 
  window.onload = function() {
  	 canvas = document.getElementById('canvas');
 	 context = canvas.getContext('2d');
-	 timerBegin = setInterval(beginStory, 100);
-	 makeParticles();
-	 timer = setInterval(moveParticles, 100);
-	 timerRestart = setInterval(makeParticles, 4500);
+	 Nayru();
+	 var timerGod = setTimeout(Depart, 4000);
+	 var timerTri = setTimeout(triforce, 6000);
+	 
+	timerBegin = setTimeout(beginStory, 100);
+	makeParticles();
+	timer = setInterval(moveParticles, 100);
+	var timerTri = setTimeout(triforce, 6000);
+	
+
+	timerRestart = setInterval(makeParticles, 4500);
+	 
+	 //clearTimeout(timerTri);
  }
  
  
