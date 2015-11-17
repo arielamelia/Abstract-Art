@@ -1,0 +1,120 @@
+<!doctype html>
+<head>
+<title>The Golden Goddesses</title>
+<style>
+body{
+background-color: black;
+}
+canvas{
+	border: 1px solid white;
+}
+</style>
+</head>
+<script>
+var canvas;
+ var context;
+ var particles;
+ var timerTriforce;
+ var timerDin;
+ var timerNayru;
+ var timerFarore;
+ var timerGoddess;
+ var timerRestart;
+  function degreesToRadians(degrees) {
+	 //converts from degrees to radians and returns
+	 return (degrees * Math.PI)/180;
+ }
+ function makeParticles() {
+	//create an array of particles for our animation
+	particles = [];
+	for(var i = 0; i < 30; i++)
+	{
+		particles.push(new Particle());
+	}
+ }
+ function degreesToRadians(degrees) {
+	 //converts from degrees to radians and returns
+	 return (degrees * Math.PI)/180;
+ }
+ function Particle()
+ {
+	 //the constructor for a single particle, with random starting x+y, velocity, color, and radius
+	 //this.x = Math.random()*canvas.width;
+	 //this.y = Math.random()*canvas.height;
+	 this.x = canvas.width/2;
+	 this.y = canvas.height/2;
+	 this.vx = Math.random()*10-5;
+	 this.vy = Math.random()*10-5;
+	 //var colors = ["#ffa700","#fdf769","#b0a53f","#fff400","white"];
+	 //var Din = ["red","#940606","#b03f3f","#3c0000","#ff6262"];
+	 //var Nayru = ["#005eff","#009fff","#759aff","#0085ff","#356a76"];
+	 var Farore = ["#00ff1e","#85fb55","#318506","#0e3c00","#6bb265"];
+	 this.color = Farore[Math.floor(Math.random()*Farore.length)];
+	 this.radius = 30;
+ }
+ function moveParticles() {
+	 //partially clear the screen to fade previous circles, and draw a new particle at each new coordinate
+	 context.globalCompositeOperation = "source-over";
+	 context.fillStyle = "rgba(0, 0, 0, 0.3)";
+	 context.fillRect(0, 0, canvas.width, canvas.height);
+	 context.globalCompositeOperation = "lighter";
+	 for(var i = 0; i < particles.length; i++)
+	 {
+		 var p = particles[i];
+		 context.beginPath();
+		 context.arc(p.x, p.y, p.radius, 0, degreesToRadians(360), true);
+		 context.fillStyle = p.color;
+		 context.fill();
+		 p.x += p.vx;
+		 p.y += p.vy;
+		 if(p.x < -50) p.x = canvas.width+50;
+		 if(p.y < -50) p.y = canvas.height-50;
+		 if(p.x > canvas.width+50) p.x = -50;
+		 if(p.y > canvas.height+50) p.y = -50;
+		 p.radius -= 1;
+	 }
+ }
+/*function makeText(){
+context.font = '40px Helvetica';            
+context.strokeText('Before time began...' 10, 100);
+context.fillStyle = '#00FF00';  
+context.fillText('Before time began...', 10, 100);            
+}*/
+  function clearScreen(color) {
+	 context.clearRect(0, 0, canvas.width, canvas.height);
+	 context.fillStyle = color;
+	 context.fillRect(0, 0, canvas.width, canvas.height); 
+ }
+ 
+ window.onload = function() {
+ 	 canvas = document.getElementById('canvas');
+	 context = canvas.getContext('2d');
+	 makeParticles();
+	// makeText();
+	 timer = setInterval(moveParticles, 100);
+	 timerRestart = setInterval(makeParticles, 4500);
+ }
+/*Before time began...
+Before spirits and life existed..
+Three golden goddesses descended 
+Din, the goddess of power...
+Cultivated the land and created the red earth
+Nayru, the goddess of wisdom…
+Poured her wisdom onto the earth and gave the spirit of law to the world
+Farore, the goddess of courage…
+Produced all life forms who would uphold the law
+Labors completed, 
+The goddesses departed 
+Leaving Golden, Sacred, Triangles 
+Since then, the sacred triangles have been the basis of our world’s providence 
+And the resting place of the triangles has become the Sacred Realm*/
+
+
+</script>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="600"></canvas>
+	</body>
+</html>
+</script>
+
