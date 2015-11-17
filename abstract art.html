@@ -12,19 +12,12 @@ canvas{
 </head>
 <script>
 var canvas;
- var context;
- var particles;
- var timerTriforce;
- var timerDin;
- var timerNayru;
- var timerFarore;
- var timerGoddess;
- var timerRestart;
-  function degreesToRadians(degrees) {
-	 //converts from degrees to radians and returns
-	 return (degrees * Math.PI)/180;
- }
- function makeParticles() {
+var context;
+var particles;
+var timer;
+var timerRestart;
+var text = 'Before time began...'
+function makeParticles() {
 	//create an array of particles for our animation
 	particles = [];
 	for(var i = 0; i < 30; i++)
@@ -45,11 +38,8 @@ var canvas;
 	 this.y = canvas.height/2;
 	 this.vx = Math.random()*10-5;
 	 this.vy = Math.random()*10-5;
-	 //var colors = ["#ffa700","#fdf769","#b0a53f","#fff400","white"];
-	 //var Din = ["red","#940606","#b03f3f","#3c0000","#ff6262"];
-	 //var Nayru = ["#005eff","#009fff","#759aff","#0085ff","#356a76"];
-	 var Farore = ["#00ff1e","#85fb55","#318506","#0e3c00","#6bb265"];
-	 this.color = Farore[Math.floor(Math.random()*Farore.length)];
+	 var colors = ["#ffa700","#fdf769","#b0a53f","#fff400","white"];
+	 this.color = colors[Math.floor(Math.random()*colors.length)];
 	 this.radius = 30;
  }
  function moveParticles() {
@@ -68,29 +58,51 @@ var canvas;
 		 p.x += p.vx;
 		 p.y += p.vy;
 		 if(p.x < -50) p.x = canvas.width+50;
-		 if(p.y < -50) p.y = canvas.height-50;
+		 if(p.y < -50) p.y = canvas.height+50;
 		 if(p.x > canvas.width+50) p.x = -50;
 		 if(p.y > canvas.height+50) p.y = -50;
 		 p.radius -= 1;
+		 if (p.radius < 0) p.radius = 0;
 	 }
  }
-/*function makeText(){
-context.font = '40px Helvetica';            
-context.strokeText('Before time began...' 10, 100);
-context.fillStyle = '#00FF00';  
-context.fillText('Before time began...', 10, 100);            
-}*/
-  function clearScreen(color) {
-	 context.clearRect(0, 0, canvas.width, canvas.height);
-	 context.fillStyle = color;
-	 context.fillRect(0, 0, canvas.width, canvas.height); 
- }
- 
+function beginStory(){
+	context.font = '40px Helvetica';            
+	context.strokeText(text, 10, 100);
+	context.fillStyle = '#00FF00';  
+	context.fillText(text, 10, 100);
+}
+function triforce(){
+context.fillStyle="#A2322E";
+context.beginPath();
+context.moveTo((canvas.width/2)-200,(canvas.height)-250);
+context.lineTo((canvas.width/2)-100,(canvas.height)-350);
+context.lineTo((canvas.width/2),(canvas.height)-250);
+context.closePath();
+context.fill();
+
+context.fillStyle="#A2322E";
+context.beginPath();
+context.moveTo((canvas.width/2),(canvas.height)-250);
+context.lineTo((canvas.width/2)+100,(canvas.height)-350);
+context.lineTo((canvas.width/2)+200,(canvas.height)-250);
+context.closePath();
+context.fill();
+
+context.fillStyle="#A2322E";
+context.beginPath();
+context.moveTo((canvas.width/2)-100,(canvas.height)-350);
+context.lineTo((canvas.width/2),(canvas.height)-450);
+context.lineTo((canvas.width/2)+100,(canvas.height)-350);
+context.closePath();
+context.fill();
+
+}
  window.onload = function() {
  	 canvas = document.getElementById('canvas');
 	 context = canvas.getContext('2d');
+	 beginStory();
+	 triforce();
 	 makeParticles();
-	// makeText();
 	 timer = setInterval(moveParticles, 100);
 	 timerRestart = setInterval(makeParticles, 4500);
  }
