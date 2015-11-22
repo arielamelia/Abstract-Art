@@ -1,6 +1,6 @@
 <!doctype html>
 <head>
-<title>The Golden Goddesses</title>
+<title>The Legend Begins</title>
 <style>
 body{
 background-color: black;
@@ -13,44 +13,201 @@ canvas{
 <script>
 var canvas;
 var context;
+var rain;
 var particles;
-var timer;
-var timerBegin;
-var timerRestart;
+var x = 400;
+var y = 300;
+var dx = 1;
+var dy = 15;
+var text;
+var text2;
+//beginning functions
+function init (){
+	canvas = document.getElementById('canvas');
+	context = canvas.getContext('2d');
+ 	window.addEventListener('resize', resizeCanvas, false);
+ 	window.addEventListener('orientationchange', resizeCanvas, false);
+ 	resizeCanvas();
+}
+function resizeCanvas() {
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	fillBackgroundColor();
+}
+function fillBackgroundColor() {
+	context.fillStyle = 'black';
+	context.fillRect(0, 0, canvas.width, canvas.height);8}
+ 
+ function degreesToRadians(degrees) {
+	 //converts from degrees to radians and returns
+	 return (degrees * Math.PI)/180;
+ }
 
-function beginStory(){
+
+function beginText(){
+	text = 'Before time began...';
 	context.font = '40px Palatino, serif';            
-	context.strokeText('Before time began...', 220, 100);
-	context.fillStyle = '#242424';  
-	context.fillText('Before time began...', 220, 100);
+	context.strokeText(text, (canvas.width/2)-(canvas.width/8), 100);
+	context.fillStyle = 'white';  
+	context.fillText(text, (canvas.width/2)-(canvas.width/8), 100);
+}
+
+//din animation
+function dinText(){
+	text = 'Din, the goddess of power...';
 	context.font = '40px Palatino, serif';            
-	context.strokeText('Before spirits and life existed...', 150, 500);
-	context.fillStyle = '#242424';  
-	context.fillText('Before spirits and life existed...', 150, 500);	
+	context.strokeText(text, (canvas.width/2)-(canvas.width/7), 100);
+	context.fillStyle = 'white';  
+	context.fillText(text, (canvas.width/2)-(canvas.width/7), 100);
+}
+function powerText(){
+	text2 = 'Cultivated the land and created the red earth';
+	context.font = '40px Palatino, serif';            
+	context.strokeText(text2, (canvas.width/2)-(canvas.width/4), canvas.height-100);
+	context.fillStyle = 'white';  
+	context.fillText(text2, (canvas.width/2)-(canvas.width/4), canvas.height-100);
+}
+
+function makeSquares() {
+	//create an array of particles for our animation
+	squares = [];
+	for(var i = 0; i < 30; i++)
+	{
+		squares.push(new Square());
 	}
+ }
+ function Square()
+ {
+	 this.x = canvas.width/2;
+	 this.y = canvas.height/2;
+	 this.vx = Math.random()*10-5;
+	 this.vy = Math.random()*10-5;
+	 var colors = ["#ff0000", "#ff4d4d", "#ff4d4d", "#800000","white"];
+	 this.color = colors[Math.floor(Math.random()*colors.length)];
+	 
+ }
+ function moveSquares() {
+	 context.globalCompositeOperation = "source-over";
+	 context.fillStyle = "rgba(0, 0, 0, 0.3)";
+	 context.fillRect(0, 0, canvas.width, canvas.height);
+	 context.globalCompositeOperation = "lighter";
+	 for(var i = 0; i < squares.length; i++)
+	 {
+		 var p = squares[i];
+		 context.beginPath();
+		 context.rect(p.x,p.y,50,50)
+		 context.fillStyle = p.color;
+		 context.fill();
+		 p.x += p.vx;
+		 p.y += p.vy;
+	 }
+ }
 
-function Depart(){
+//nayru animation
+function nayruText(){
 	context.font = '40px Palatino, serif';            
-	context.strokeText('Labors completed, the goddesses departed', 50, 100);
+	context.strokeText('Nayru, the goddess of wisdom...', (canvas.width/2)-(canvas.width/6), 100);
+	context.fillStyle = '#242424';6 
+	context.fillText('Nayru, the goddess of wisdom...', (canvas.width/2)-(canvas.width/6), 100);
+}
+function wisdomText(){
+	context.font = '40px Palatino, serif';            
+	context.strokeText('Poured her wisdom onto the earth', (canvas.width/2)-(canvas.width/6), canvas.height-100);
 	context.fillStyle = '#242424';  
-	context.fillText('Labors completed, the goddesses departed', 50, 100);
-	context.font = '40px Palatino, serif';
-	context.strokeText('Leaving Golden, Sacred, Triangles', 120, 500);
-	context.fillStyle = '#242424';  
-	context.fillText('Leaving Golden, Sacred, Triangles', 120, 500);
-}	
-	
-function triforce(){
-	context.font = '40px Palatino, serif';
-	context.strokeText('The basis of our world\'s providence', 120, 100);
-	context.fillStyle = '#242424';  
-	context.fillText('The basis of our world\'s providence', 120, 100);
+	context.fillText('Poured her wisdom onto the earth', (canvas.width/2)-(canvas.width/6), canvas.height-100);
+}
+ function cloud(){
+context.fillStyle=("white");
+context.beginPath();
+context.moveTo(0,0);
+context.bezierCurveTo(50,canvas.height/8,canvas.width,canvas.height/8,canvas.width,0);
+context.stroke();
+context.fill();
+}
 
-	context.font = '40px Palatino, serif';
-	context.strokeText('Which now rest in the Sacred Realm', 120, 500);
-	context.fillStyle = '#242424';  
-	context.fillText('Which now rest in the Sacred Realm', 120, 500);
+function makeItRain() {
+	rain = [];
+	for(var i = 0; i < 60; i++)
+	{
+		rain.push(new Raindrop());
+	}
+ }
+
+ function Raindrop(){
+	this.x = Math.random()*2000;
+	this.y = (canvas.height-600);
 	
+	var colors = ["#002db3","#3366ff","#809fff","white","#00134d"];
+	this.color = colors[Math.floor(Math.random()*colors.length)];
+	this.radius = 15;
+ }
+ function moveRain() {
+	 context.globalCompositeOperation = "source-over";
+	 context.fillStyle = "rgba(0, 0, 0, 0.3)";
+	 context.fillRect(0, 50, canvas.width, canvas.height);
+	 context.globalCompositeOperation = "lighter";
+	 
+	 for(var i = 0; i < rain.length; i++) {
+		 var p = rain[i];
+		 context.beginPath();
+		 context.arc(p.x, p.y, p.radius, 0, degreesToRadians(180), false);
+		 context.lineTo((p.x),(p.y-30));
+		context.lineTo((p.x+15),(p.y-30));
+		context.closePath();
+		 context.fillStyle = p.color;
+		 context.fill();
+ 		 p.x += dx;
+ 		 p.y += dy;
+		}	
+ }
+
+//farore animation
+function faroreText(){
+	context.font = '40px Palatino, serif';            
+	context.strokeText('Farore, the goddess of courage...', (canvas.width/2)-(canvas.width/6), 100);
+	context.fillStyle = '#242424';  
+	context.fillText('Farore, the goddess of courage...',(canvas.width/2)-(canvas.width/6), 100);
+}
+function courageText(){
+	context.font = '40px Palatino, serif';            
+	context.strokeText('Produced all life forms who would uphold the law', (canvas.width/2)-(canvas.width/4), canvas.height-100);
+	context.fillStyle = '#242424';  
+	context.fillText('Produced all life forms who would uphold the law', (canvas.width/2)-(canvas.width/4), canvas.height-100);
+
+}
+function drawStar(){
+	var x = (Math.random()*100+100);
+    var y = (Math.random()*100+100);
+    var colors = ["#85e085","#47d147","#1f7a1f","white","#0f3d0f"];
+    var color = colors[Math.floor(Math.random()*colors.length)];
+	var radius = 20; 
+	context.beginPath();
+ 	context.translate(x, y);
+ 	context.moveTo(0,0-radius);
+ 		for (var i = 0; i < 30; i++){
+ 			context.rotate(Math.PI / 5);
+ 			context.lineTo(0, 0 - (radius*1));
+ 			context.rotate((Math.PI / 2)*3);
+ 			context.lineTo(0, 0 - radius);
+ 			context.fillStyle = color;
+ 			context.fill();
+ 		}
+}
+
+//final words
+function depart(){
+	context.font = '40px Palatino, serif';            
+	context.strokeText('Labors completed, the goddesses departed', (canvas.width/2)-(canvas.width/3), 100);
+	context.fillStyle = '#242424';  
+	context.fillText('Labors completed, the goddesses departed', (canvas.width/2)-(canvas.width/3), 100);
+	context.font = '40px Palatino, serif';
+	context.strokeText('Leaving Golden, Sacred, Triangles', (canvas.width/2)-(canvas.width/4), 500);
+	context.fillStyle = '#242424';  
+	context.fillText('Leaving Golden, Sacred, Triangles',(canvas.width/2)-(canvas.width/4), 500);
+}	
+
+//and triforce	
+function triforce(){
 	//power
 	context.fillStyle="#312801";
 	context.beginPath();
@@ -77,23 +234,17 @@ function triforce(){
 	context.fill();
 }
 
+//ending animation/explosion
 function makeParticles() {
-	//create an array of particles for our animation
 	particles = [];
 	for(var i = 0; i < 30; i++)
 	{
 		particles.push(new Particle());
 	}
  }
- function degreesToRadians(degrees) {
-	 //converts from degrees to radians and returns
-	 return (degrees * Math.PI)/180;
- }
+
  function Particle()
  {
-	 //the constructor for a single particle, with random starting x+y, velocity, color, and radius
-	 //this.x = Math.random()*canvas.width;
-	 //this.y = Math.random()*canvas.height;
 	this.x = (canvas.width/2)
 	 this.y = (canvas.height/2)-5;
 	 this.vx = Math.random()*10-5;
@@ -103,7 +254,6 @@ function makeParticles() {
 	 this.radius = 20;
  }
  function moveParticles() {
-	 //partially clear the screen to fade previous circles, and draw a new particle at each new coordinate
 	 context.globalCompositeOperation = "source-over";
 	 context.fillStyle = "rgba(0, 0, 0, 0.3)";
 	 context.fillRect(0, 0, canvas.width, canvas.height);
@@ -123,64 +273,46 @@ function makeParticles() {
 	 }
  }
 
- function Din(){
- //diamond
-  }
- function Nayru(){
- //cloud
-context.fillStyle=("white");
-context.beginPath();
-context.moveTo(0,0);
-context.bezierCurveTo(0,80,800,80,800,0);
-context.stroke();
-context.fill();
-}
- function Farore(){
- //star
- }
  
  function clearScreen(color) {
 	 //clears the screen and fills with the color of choice
 	 context.clearRect(0, 0, canvas.width, canvas.height);
-	 context.fillStyle = white;
+	 context.fillStyle = ("black");
 	 context.fillRect(0, 0, canvas.width, canvas.height);
  }
+
  
  window.onload = function() {
- 	 canvas = document.getElementById('canvas');
-	 context = canvas.getContext('2d');
-	 Nayru();
-	 var timerGod = setTimeout(Depart, 4000);
-	 var timerTri = setTimeout(triforce, 6000);
-	 
-	timerBegin = setTimeout(beginStory, 100);
-	makeParticles();
-	timer = setInterval(moveParticles, 100);
-	var timerTri = setTimeout(triforce, 6000);
+ 	init();
+	var timerBegin =  setTimeout(beginText, 100);
+	var timerClear = setTimeout(clearScreen,2000);
+
+ 	var timerPDelay = setTimeout(powerText, 3000);
+ 	var timerDDelay = setTimeout(dinText, 3000);
+ 	var timerSquareDelay = setTimeout(makeSquares, 3000);
+ 	var timerSquareDelay = setTimeout(moveSquares, 3000);
+ 	var timerSquare = setInterval(moveSquares,10);
+	var clearSquare = clearInterval(makeSquares);
+
+ 	var timerWText = setInterval(wisdomText, 4000);
+ 	var timerNText = setInterval(nayruText,6000);
+ 	var timerRainDelay = setTimeout(makeItRain, 6000);
+ 	var timerDropDelay = setTimeout(moveRain, 6000);
+ 	var timerRain = setInterval(moveRain,100);
 	
 
-	timerRestart = setInterval(makeParticles, 4500);
-	 
-	 //clearTimeout(timerTri);
- }
- 
- 
-/*Before time began...
-Before spirits and life existed..
-Three golden goddesses descended 
-Din, the goddess of power...
-Cultivated the land and created the red earth
-Nayru, the goddess of wisdom…
-Poured her wisdom onto the earth and gave the spirit of law to the world
-Farore, the goddess of courage…
-Produced all life forms who would uphold the law
-Labors completed, 
-The goddesses departed 
-Leaving Golden, Sacred, Triangles 
-Since then, the sacred triangles have been the basis of our world’s providence 
-And the resting place of the triangles has become the Sacred Realm*/
+	var timerFText = setInterval(faroreText,8000);
+	var timerCText = setInterval(courageText,8000);
+	var timerStarDelay = setTimeout(drawStar, 9000);
+	var timerStar = setInterval(drawStar, 100);
 
-
+	var timerTriDelay = setTimeout(triforce, 12000);
+	var timerDepartDelay = setTimeout(depart, 12000);
+	var timertri = setInterval(triforce, 3000);
+	var timerExplodeDelay = setTimeout(makeParticles,13000);
+	var timerExplodeDelay2 = setTimeout(moveParticles,13500);
+	var timerExplode = setInterval(moveParticles, 100);
+}
 </script>
 </head>
 <body>
