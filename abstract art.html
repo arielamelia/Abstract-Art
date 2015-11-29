@@ -141,22 +141,7 @@ function drawWords(words){
 	context.fillText('wisdom', words.x-30, words.y+15);
 	context.fillText('courage', words.x+25, words.y+15);
 }
-	function drawText(){
-		context.font = '40px Palatino, serif';            
-		context.shadowColor = '#666600';
-		context.shadowOffsetX = 2;
-		context.shadowOffsetY = 2;
-		context.shadowBlur = 5;
-		context.strokeText('Labors completed, the goddesses departed', (canvas.width/2)-(canvas.width/4.5), 50);
-		context.fillStyle = '#ffff99';  
-		context.fillText('Labors completed, the goddesses departed', (canvas.width/2)-(canvas.width/4.5), 50);
-		context.font = '40px Palatino, serif';      
-		context.strokeText('Leaving Golden, Sacred, Triangles', (canvas.width/2)-(canvas.width/5), 610);
-		context.fillStyle = '#ffff99';  
-		context.fillText('Leaving Golden, Sacred, Triangles', (canvas.width/2)-(canvas.width/5), 610);
-		
-	}
-	
+
       function resizeCanvas() {
         canvas.width = window.innerWidth-20;
         canvas.height = window.innerHeight-20;
@@ -177,9 +162,6 @@ function drawWords(words){
 				shapes[i].x += shapes[i].dx;
 				shapes[i].y += shapes[i].dy;
 		}
-		
-
-		drawText();
 		drawTriforce();		 
       }
   
