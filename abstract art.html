@@ -1,25 +1,23 @@
 <!doctype html>
 <html>
 <head>
-<title>Responsive Interactive Canvas</title>
+<title>The Legend Concludes</title>
 <script>
 	  var canvas;
 	  var context;
 	  var shapes = [];
 	  var timer;
 	  var timerTwo;
-	  var timerThree;
-	  var possibleShapes = ['diamond','drop', 'star', 'circle', 'triforce'];
-	  //Constructor for ALL shapes; can make x and y random at this.x and this.y 
+	  var possibleShapes = ['diamond','brain', 'crane', 'fan', 'triforce','words'];
 	  function Shape(x, y, color) {
-		this.x = x;
-		this.y = y;
-		this.length = Math.random()*10+10
+		this.x = (Math.random()*100)+canvas.width/2;
+		this.y = (Math.random()*100)+canvas.height/2;
+		this.length = Math.random()*10+20;
 		this.size = Math.random()*20+5;
 		this.dx = Math.random()*4-2;
 		this.dy = Math.random()*4-2;
-		this.color = color;10+20
-		this.radius = Math.random()*20+10
+		this.color = color;
+		this.radius = Math.random()*20+20;
 		this.shape = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
 	  }
       function init() {
@@ -29,23 +27,21 @@
         window.addEventListener('resize', resizeCanvas, false);
         window.addEventListener('orientationchange', resizeCanvas, false);
         resizeCanvas();
-		canvas.onclick = function(event) {
-			handleClick(event.clientX, event.clientY);
-		}
-		//make resize canvas the redraw timer; get a new canvas every 20 seconds
 		func = setInterval(resizeCanvas, 20);
-		//draws a new shape evry 200 miliseconds; set a limit within the function itself
-		timerTwo = setInterval(newShape, 200);
+		timerTwo = setInterval(newShape, 150);
 
       }
-      //fills shape array with random shapes colors etc; can reuse logic to create random enemy spawn points and random questions for a quiz, etc
 	  function newShape() {
-		var x = Math.random() * canvas.width;
-		var y = Math.random() * canvas.height;
-		var colors = ["#ff0000", "#ff4d4d", "#ff4d4d", "#800000","#002db3","#3366ff","#809fff","#00134d""#85e085","#47d147","#1f7a1f","#0f3d0f"];
+	  	var x = this.x;
+	  	var y = this.y;
+		var colors = ['#ff0000', '#ff4d4d', '#ff4d4d', '#800000','#002db3','#3366ff','#809fff','#00134d','#85e085','#47d147','#1f7a1f','#0f3d0f'];
 		var color = colors[Math.floor(Math.random()*colors.length)];
 		shapes.push(new Shape(x, y, color));
 		}
+		
+	function degreesToRadians(degrees) {
+		return (degrees * Math.PI)/180;
+	}
 	 function drawDiamond(diamond){
 		context.globalCompositeOperation = 'lighter';
 		context.beginPath();
@@ -57,52 +53,53 @@
 	    context.closePath();
 	    context.fillStyle = diamond.color;
 		context.fill();
+
 	}
-	 function drawDrop(drop){
+	 function drawBrain(brain){
 		context.globalCompositeOperation = 'lighter';
 		context.beginPath();
-		context.moveTo(drop.x, drop.y);
-		context.arc(drop.x,drop.y, drop.radius, 0,degreesToRadians(180),true);
-		context.lineTo(drop.x+(drop.radius/2),drop.y+drop.radius);
-		context.lineTo(drop.x-(drop.radius/2),drop.y+drop.radius);
+		context.moveTo(brain.x, brain.y);
+		context.arc(brain.x,brain.y, brain.radius, 0,degreesToRadians(180),true);
+		context.lineTo(brain.x+(brain.radius/2),brain.y+brain.radius);
+		context.lineTo(brain.x-(brain.radius/2),brain.y+brain.radius);
 		context.lineJoin = 'round';
 		context.closePath();
-		context.fillStyle = drop.color;
+		context.fillStyle = brain.color;
 		context.fill();
 	 	
 	}
 
- 	function drawStar(star){
+ 	function drawCrane(crane){
 	 	context.globalCompositeOperation = 'lighter';
 		context.beginPath();
-	    context.moveTo(star.x, star.y);
-	    context.lineTo(star.x+(star.length*.2), star.y-(star.length*.4));
-	    context.lineTo(star.x+(star.length*.4), star.y);
+	    context.moveTo(crane.x, crane.y);
+	    context.lineTo(crane.x+(crane.length*.2), crane.y-(crane.length*.4));
+	    context.lineTo(crane.x+(crane.length*.4), crane.y);
 	    
-	    context.lineTo(star.x+(star.length*.6), star.y-(star.length*.6));
-	    context.lineTo(star.x+(star.length*.4), star.y-(star.length*.8));
+	    context.lineTo(crane.x+(crane.length*.6), crane.y-(crane.length*.6));
+	    context.lineTo(crane.x+(crane.length*.4), crane.y-(crane.length*.8));
 	    
-	    context.lineTo(star.x+(star.length/.4), star.y-(star.length*1.6));
-	    context.lineTo(star.x+star.length, star.y-(star.length*.8));
+	    context.lineTo(crane.x+(crane.length/.4), crane.y-(crane.length*1.6));
+	    context.lineTo(crane.x+crane.length, crane.y-(crane.length*.8));
 	    
-	    context.lineTo(star.x-(star.length/.4), star.y-(star.length*1.6));
-	    context.lineTo(star.x-star.length, star.y-(star.length*.8));
+	    context.lineTo(crane.x-(crane.length/.4), crane.y-(crane.length*1.6));
+	    context.lineTo(crane.x-crane.length, crane.y-(crane.length*.8));
 
-	    context.lineTo(star.x+(star.length*.6), star.y-(star.length*.6));
-	    context.lineTo(star.x+(star.length*.4), star.y-(star.length*.8));
+	    context.lineTo(crane.x+(crane.length*.6), crane.y-(crane.length*.6));
+	    context.lineTo(crane.x+(crane.length*.4), crane.y-(crane.length*.8));
 	    
 	    context.lineJoin = 'miter';
 	    context.closePath();
-	    context.fillStyle = star.color;
+	    context.fillStyle = crane.color;
 	    context.fill();
-    }
+	}
 	
-	function drawCircle(circle){
+	function drawFan(fan){
 		context.globalCompositeOperation = 'lighter';
 		context.beginPath();
-		context.moveTo(circle.x,circle.y);
-		context.arc(circle.x,circle.y, circle.radius, 0,degreesToRadians(360),true);
-		context.fillStyle = circle.color;
+		context.moveTo(fan.x,fan.y);
+		context.arc(fan.x,fan.y, fan.radius, 0,degreesToRadians(100),false);
+		context.fillStyle = fan.color;
 		context.fill();	
 	}
 
@@ -110,89 +107,85 @@
 		//power
 		context.fillStyle="#312801";
 		context.beginPath();
-		context.moveTo((canvas.width/2)-100,(canvas.height)-350);
-		context.lineTo((canvas.width/2),(canvas.height)-450);
-		context.lineTo((canvas.width/2)+100,(canvas.height)-350);
+		context.moveTo((canvas.width/2)-200,(canvas.height)-335);
+		context.lineTo((canvas.width/2),(canvas.height)-585);
+		context.lineTo((canvas.width/2)+200,(canvas.height)-335);
 		context.closePath();
 		context.fill();
 		//wisdom
 		context.fillStyle="#fbc41a";
 		context.beginPath();
-		context.moveTo((canvas.width/2)-200,(canvas.height)-250);
-		context.lineTo((canvas.width/2)-100,(canvas.height)-350);
-		context.lineTo((canvas.width/2),(canvas.height)-250);
+		context.moveTo((canvas.width/2)-400,(canvas.height)-75);
+		context.lineTo((canvas.width/2)-200,(canvas.height)-335);
+		context.lineTo((canvas.width/2),(canvas.height)-75);
 		context.closePath();
 		context.fill();
 		//courage
 		context.fillStyle="#a78804";
 		context.beginPath();
-		context.moveTo((canvas.width/2),(canvas.height)-250);
-		context.lineTo((canvas.width/2)+100,(canvas.height)-350);
-		context.lineTo((canvas.width/2)+200,(canvas.height)-250);
+		context.moveTo((canvas.width/2),(canvas.height)-75);
+		context.lineTo((canvas.width/2)+200,(canvas.height)-335);
+		context.lineTo((canvas.width/2)+400,(canvas.height)-75);
 		context.closePath();
 		context.fill();
 	}
 
 
+function drawWords(words){
+	context.font = '15px Palatino, serif';            
+	context.strokeText('power', words.x, words.y);
+	context.strokeText('wisdom', words.x-30, words.y+15);
+	context.strokeText('courage', words.x+25, words.y+15);
+	context.fillStyle = '#cc9900';  	
+	context.fillText('power', words.x, words.y);
+	context.fillText('wisdom', words.x-30, words.y+15);
+	context.fillText('courage', words.x+25, words.y+15);
+}
 	function drawText(){
-		var textTop = ['Before time began...', 'Din, the goddess of power...', 'Nayru, the goddess of wisdom...', 'Farore, the goddess of courage...','Labors completed, the goddesses departed'];
-		var textBottom = ['','Cultivated the land and created the red earth', 'Poured her wisdom onto the earth', 'Produced all life forms who would uphold the law', 'Leaving Golden, Sacred, Triangles'];
-
-		for(var i=0; i<textTop.length; i++){
-			context.font = '40px Palatino, serif';            
-			context.strokeText(textTop[i], (canvas.width/2)-(canvas.width/3), 100);
-			context.fillStyle = 'red';  
-			context.fillText(textTop[i], (canvas.width/2)-(canvas.width/3), 100);
-		}
-		for(var j=0; j<textBottom.length; j++){
-				context.font = '40px Palatino, serif';            
-				context.strokeText(textBottom[j], (canvas.width/2)-(canvas.width/3), 500);
-				context.fillStyle = 'red';  
-				context.fillText(textBottom[j], (canvas.width/2)-(canvas.width/3), 500);
-		}
+		context.font = '40px Palatino, serif';            
+		context.shadowColor = '#666600';
+		context.shadowOffsetX = 2;
+		context.shadowOffsetY = 2;
+		context.shadowBlur = 5;
+		context.strokeText('Labors completed, the goddesses departed', (canvas.width/2)-(canvas.width/4.5), 50);
+		context.fillStyle = '#ffff99';  
+		context.fillText('Labors completed, the goddesses departed', (canvas.width/2)-(canvas.width/4.5), 50);
+		context.font = '40px Palatino, serif';      
+		context.strokeText('Leaving Golden, Sacred, Triangles', (canvas.width/2)-(canvas.width/5), 610);
+		context.fillStyle = '#ffff99';  
+		context.fillText('Leaving Golden, Sacred, Triangles', (canvas.width/2)-(canvas.width/5), 610);
+		
 	}
 	
       function resizeCanvas() {
         canvas.width = window.innerWidth-20;
         canvas.height = window.innerHeight-20;
 		fillBackgroundColor();
-		//place the shapes in their draw function; takes the chosen value from the array choice and tells it what to mean
 		for (var i=0; i<shapes.length; i++) {
 			if (shapes[i].shape == 'diamond') {
 				drawDiamond(shapes[i]);
-			}else if (shapes[i].shape == 'drop') {
-				drawDrop(shapes[i]);
-			} else if (shapes[i].shape == 'star') {
-				drawStar(shapes[i]);
+			}else if (shapes[i].shape == 'brain') {
+				drawBrain(shapes[i]);
+			} else if (shapes[i].shape == 'crane') {
+				drawCrane(shapes[i]);
 			} else if (shapes[i].shape == 'triforce') {
 				drawTriforce(shapes[i]);
-			}
-			else if (shapes[i].shape == 'circle'){
-				drawCircle(shapes[i]);
-			}
-			//animates shapes! animates shapes relative to a single coordinate; keeps shapes on screen; all values from inital object oriented function
-			if (shapes[i].x + shapes[i].dx > canvas.width || shapes[i].x + shapes[i].dx < 0)
-				shapes[i].dx = -shapes[i].dx;
-			if (shapes[i].y + shapes[i].dy > canvas.height || shapes[i].y + shapes[i].dy < 0)
-				shapes[i].dy = -shapes[i].dy;
+			}else if (shapes[i].shape == 'fan'){
+				drawFan(shapes[i]);
+			}else if (shapes[i].shape == 'words'){
+				drawWords(shapes[i]);}
 				shapes[i].x += shapes[i].dx;
 				shapes[i].y += shapes[i].dy;
 		}
 		
 
 		drawText();
-		//timerThree = setInterval(drawText, 2000);		 
+		drawTriforce();		 
       }
   
 	  function fillBackgroundColor() {
-		 //var colors = ["white", "yellow", "blue", "red"];
-		 //var bgColor = colors[Math.floor(Math.random() * colors.length)];
-		 context.fillStyle = 'black';
+		 context.fillStyle = '#262626';
 		 context.fillRect(0, 0, canvas.width, canvas.height);
-	}
-	function degreesToRadians(degrees) {
-		//converts from degrees to radians and returns
-		return (degrees * Math.PI)/180;
 	}
 	window.onload = init;
 </script>
