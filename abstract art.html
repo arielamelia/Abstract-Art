@@ -8,7 +8,7 @@
 	  var shapes = [];
 	  var timer;
 	  var timerTwo;
-	  var possibleShapes = ['diamond','brain', 'crane', 'fan', 'triforce','words'];
+	  var possibleShapes = ['diamond','circle', 'crane', 'triangle','words'];
 	  function Shape(x, y, color) {
 		this.x = (Math.random()*100)+canvas.width/2;
 		this.y = (Math.random()*100)+canvas.height/2;
@@ -28,7 +28,9 @@
         window.addEventListener('orientationchange', resizeCanvas, false);
         resizeCanvas();
 		func = setInterval(resizeCanvas, 20);
-		timerTwo = setInterval(newShape, 150);
+		canvas.onclick = function(event) {
+     	newShape();
+ 		};
 
       }
 	  function newShape() {
@@ -55,18 +57,23 @@
 		context.fill();
 
 	}
-	 function drawBrain(brain){
+	
+	function drawTriangle(triangle){
+		context.beginPath();
+		context.moveTo(triangle.x-(triangle.length*2),triangle.y-(triangle.length*3.35));
+		context.lineTo(triangle.x,triangle.y-(triangle.length*5.85));
+		context.lineTo(triangle.x+(triangle.length*2),triangle.y-(triangle.length*3.35));
+		context.closePath();
+		context.fillStyle = triangle.color;
+		context.fill();
+	}
+	
+	function drawCircle(circle){
 		context.globalCompositeOperation = 'lighter';
 		context.beginPath();
-		context.moveTo(brain.x, brain.y);
-		context.arc(brain.x,brain.y, brain.radius, 0,degreesToRadians(180),true);
-		context.lineTo(brain.x+(brain.radius/2),brain.y+brain.radius);
-		context.lineTo(brain.x-(brain.radius/2),brain.y+brain.radius);
-		context.lineJoin = 'round';
-		context.closePath();
-		context.fillStyle = brain.color;
-		context.fill();
-	 	
+	    context.arc(circle.x,circle.y, circle.radius, 0,360,true);
+	    context.fillStyle = circle.color;
+	    context.fill();
 	}
 
  	function drawCrane(crane){
@@ -92,55 +99,68 @@
 	    context.closePath();
 	    context.fillStyle = crane.color;
 	    context.fill();
+	}	
+
+	function drawWords(words){
+		context.font = '15px Palatino, serif';            
+		context.strokeText('words', words.x, words.y);
+		context.fillStyle = words.color;  	
+		context.fillText('words', words.x, words.y);
 	}
+
 	
-	function drawFan(fan){
-		context.globalCompositeOperation = 'lighter';
+	function drawFlower(){
+		context.fillStyle = 'red';
 		context.beginPath();
-		context.moveTo(fan.x,fan.y);
-		context.arc(fan.x,fan.y, fan.radius, 0,degreesToRadians(100),false);
-		context.fillStyle = fan.color;
+		context.arc(canvas.width/2,canvas.height/2-(canvas.height/16+canvas.height/32), canvas.height/16, 0, degreesToRadians(360),true);
 		context.fill();	
+		context.fillStyle = 'yellow';
+		context.beginPath();
+		context.arc(canvas.width/2-(canvas.height/16+canvas.height/32),canvas.height/2+canvas.height/24, canvas.height/16, 0, degreesToRadians(360),true);
+		context.fill();		
+		context.fillStyle = 'blue';
+		context.beginPath();
+		context.arc(canvas.width/2+(canvas.height/16+canvas.height/32),canvas.height/2+canvas.height/24, canvas.height/16, 0, degreesToRadians(360),true);
+		context.fill();	
+		context.fillStyle = 'green';
+		context.beginPath();
+		context.arc(canvas.width/2,canvas.height/2+(canvas.height/16+canvas.height/32), canvas.height/16, 0, degreesToRadians(360),true);
+		context.fill();	
+		context.fillStyle = 'purple';
+		context.beginPath();
+		context.arc(canvas.width/2-(canvas.height/16+canvas.height/32),canvas.height/2-canvas.height/24, canvas.height/16, 0, degreesToRadians(360),true);
+		context.fill();		
+		context.fillStyle = 'orange';
+		context.beginPath();
+		context.arc(canvas.width/2+(canvas.height/16+canvas.height/32),canvas.height/2-canvas.height/24, canvas.height/16, 0, degreesToRadians(360),true);
+		context.fill();	
+		context.fillStyle = 'white';
+		context.beginPath();
+		context.arc(canvas.width/2,canvas.height/2, canvas.height/16, 0, degreesToRadians(360),true);
+		context.fill();
+		
+			
 	}
 
-	function drawTriforce(triforce){
-		//power
-		context.fillStyle="#312801";
-		context.beginPath();
-		context.moveTo((canvas.width/2)-200,(canvas.height)-335);
-		context.lineTo((canvas.width/2),(canvas.height)-585);
-		context.lineTo((canvas.width/2)+200,(canvas.height)-335);
-		context.closePath();
-		context.fill();
-		//wisdom
-		context.fillStyle="#fbc41a";
-		context.beginPath();
-		context.moveTo((canvas.width/2)-400,(canvas.height)-75);
-		context.lineTo((canvas.width/2)-200,(canvas.height)-335);
-		context.lineTo((canvas.width/2),(canvas.height)-75);
-		context.closePath();
-		context.fill();
-		//courage
-		context.fillStyle="#a78804";
-		context.beginPath();
-		context.moveTo((canvas.width/2),(canvas.height)-75);
-		context.lineTo((canvas.width/2)+200,(canvas.height)-335);
-		context.lineTo((canvas.width/2)+400,(canvas.height)-75);
-		context.closePath();
-		context.fill();
+	function drawText(){
+		context.font = '40px Palatino, serif'; 
+		var text = 'Click to Begin';
+		var text2 = 'Use W, A, S, D to draw shapes';
+		context.fillStyle = '#800000';
+		context.fillText(text, (canvas.width/2)-(canvas.width/12)+2, 50);
+		context.fillStyle = '#000066';
+		context.fillText(text,canvas.width/2-(canvas.width/12)-2, 50);
+		context.fillStyle = '#404040';
+		context.fillText(text, (canvas.width/2)-(canvas.width/12), 50);
+
+		context.fillStyle = '#800000';
+		context.fillText(text2, (canvas.width/2)-(canvas.width/6)-2, canvas.height-50);
+		context.fillStyle = '#000066';
+		context.fillText(text2,(canvas.width/2)-(canvas.width/6)+2, canvas.height-50);
+		context.fillStyle = '#404040';
+		context.fillText(text2, (canvas.width/2)-(canvas.width/6), canvas.height-50);
+
 	}
-
-
-function drawWords(words){
-	context.font = '15px Palatino, serif';            
-	context.strokeText('power', words.x, words.y);
-	context.strokeText('wisdom', words.x-30, words.y+15);
-	context.strokeText('courage', words.x+25, words.y+15);
-	context.fillStyle = '#cc9900';  	
-	context.fillText('power', words.x, words.y);
-	context.fillText('wisdom', words.x-30, words.y+15);
-	context.fillText('courage', words.x+25, words.y+15);
-}
 
       function resizeCanvas() {
         canvas.width = window.innerWidth-20;
@@ -149,20 +169,20 @@ function drawWords(words){
 		for (var i=0; i<shapes.length; i++) {
 			if (shapes[i].shape == 'diamond') {
 				drawDiamond(shapes[i]);
-			}else if (shapes[i].shape == 'brain') {
-				drawBrain(shapes[i]);
+			}else if (shapes[i].shape == 'circle') {
+				drawCircle(shapes[i]);
 			} else if (shapes[i].shape == 'crane') {
 				drawCrane(shapes[i]);
-			} else if (shapes[i].shape == 'triforce') {
-				drawTriforce(shapes[i]);
-			}else if (shapes[i].shape == 'fan'){
-				drawFan(shapes[i]);
+			} else if (shapes[i].shape == 'triangle') {
+				drawTriangle(shapes[i]);
 			}else if (shapes[i].shape == 'words'){
 				drawWords(shapes[i]);}
 				shapes[i].x += shapes[i].dx;
 				shapes[i].y += shapes[i].dy;
-		}
-		drawTriforce();		 
+		}	
+
+		drawText();
+		drawFlower();	 
       }
   
 	  function fillBackgroundColor() {
@@ -170,8 +190,9 @@ function drawWords(words){
 		 context.fillRect(0, 0, canvas.width, canvas.height);
 	}
 	window.onload = init;
+
 </script>
 </head>
-<body>
+<body>	
 <canvas id='canvas' width=500 height=500></canvas>
 </body>	  
