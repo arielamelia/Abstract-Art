@@ -8,7 +8,7 @@
 	  var shapes = [];
 	  var timer;
 	  var timerTwo;
-	  var possibleShapes = ['diamond','circle', 'crane', 'triangle','words'];
+	  var possibleShapes = ['diamond','circle', 'crane', 'triangle'];
 	  function Shape(x, y, color) {
 		this.x = (Math.random()*100)+canvas.width/2;
 		this.y = (Math.random()*100)+canvas.height/2;
@@ -23,16 +23,17 @@
       function init() {
         canvas = document.getElementById('canvas');
         context = canvas.getContext("2d");
- 
+ 		window.addEventListener('keydown', newShape, false);
         window.addEventListener('resize', resizeCanvas, false);
         window.addEventListener('orientationchange', resizeCanvas, false);
-        resizeCanvas();
+        //resizeCanvas();
 		func = setInterval(resizeCanvas, 20);
 		canvas.onclick = function(event) {
-     	newShape();
+     	var number = prompt('Enter a number 0-9'); 
  		};
 
       }
+
 	  function newShape() {
 	  	var x = this.x;
 	  	var y = this.y;
@@ -99,15 +100,12 @@
 	    context.closePath();
 	    context.fillStyle = crane.color;
 	    context.fill();
-	}	
-
-	function drawWords(words){
-		context.font = '15px Palatino, serif';            
-		context.strokeText('words', words.x, words.y);
-		context.fillStyle = words.color;  	
-		context.fillText('words', words.x, words.y);
 	}
-
+	function drawWords(words){
+		context.fillStyle = '#800000';
+		context.fillText('text', words.x,words.y);
+		
+	}
 	
 	function drawFlower(){
 		context.fillStyle = 'red';
@@ -145,7 +143,7 @@
 	function drawText(){
 		context.font = '40px Palatino, serif'; 
 		var text = 'Click to Begin';
-		var text2 = 'Use W, A, S, D to draw shapes';
+		var text2 = 'Use the letter keys to draw shapes';
 		context.fillStyle = '#800000';
 		context.fillText(text, (canvas.width/2)-(canvas.width/12)+2, 50);
 		context.fillStyle = '#000066';
@@ -166,6 +164,18 @@
         canvas.width = window.innerWidth-20;
         canvas.height = window.innerHeight-20;
 		fillBackgroundColor();
+		/*if(x=87){
+			drawDiamond();
+		}else if(x=65){
+			drawCircle();
+		}else if(x=83){
+			drawCrane();
+		}else if(x=68){
+			drawTriangle();
+		}else{
+			drawWords();
+		}
+		*/
 		for (var i=0; i<shapes.length; i++) {
 			if (shapes[i].shape == 'diamond') {
 				drawDiamond(shapes[i]);
@@ -179,6 +189,7 @@
 				drawWords(shapes[i]);}
 				shapes[i].x += shapes[i].dx;
 				shapes[i].y += shapes[i].dy;
+		
 		}	
 
 		drawText();
