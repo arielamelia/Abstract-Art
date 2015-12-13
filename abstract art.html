@@ -29,7 +29,7 @@
         //resizeCanvas();
 		func = setInterval(resizeCanvas, 20);
 		canvas.onclick = function(event) {
-     	var number = prompt('Enter a number 0-9'); 
+			resizeCanvas();
  		};
 
       }
@@ -206,4 +206,8 @@
 </head>
 <body>	
 <canvas id='canvas' width=500 height=500></canvas>
+<audio controls autoplay>
+  <source src="zeldasLullaby.mp3" type="audio/mp3">
+Your browser does not support the audio element.
+</audio>
 </body>	  
