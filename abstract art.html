@@ -6,8 +6,6 @@
 	  var canvas;
 	  var context;
 	  var shapes = [];
-	  var timer;
-	  var timerTwo;
 	  var possibleShapes = ['diamond','circle', 'crane', 'triangle'];
 	  function Shape(x, y, color) {
 		this.x = (Math.random()*100)+canvas.width/2;
@@ -111,7 +109,7 @@
 		context.fillStyle = 'red';
 		context.beginPath();
 		context.arc(canvas.width/2,canvas.height/2-(canvas.height/16+canvas.height/32), canvas.height/16, 0, degreesToRadians(360),true);
-		context.fill();	
+	context.fill();	
 		context.fillStyle = 'yellow';
 		context.beginPath();
 		context.arc(canvas.width/2-(canvas.height/16+canvas.height/32),canvas.height/2+canvas.height/24, canvas.height/16, 0, degreesToRadians(360),true);
@@ -140,24 +138,43 @@
 			
 	}
 
-	function drawText(){
-		context.font = '40px Palatino, serif'; 
-		var text = 'Click to Begin';
-		var text2 = 'Use the letter keys to draw shapes';
-		context.fillStyle = '#800000';
-		context.fillText(text, (canvas.width/2)-(canvas.width/12)+2, 50);
-		context.fillStyle = '#000066';
-		context.fillText(text,canvas.width/2-(canvas.width/12)-2, 50);
+function drawText(){ 
+		/*var text = 'Click to Begin';
+		context.font = '25px Palatino, serif';
+		context.fillStyle = '#8c8c8c';
+		context.fillText(text, (canvas.width/2)-(canvas.width/2)+9, 30);
+		context.fillStyle = '#262626';
+		context.fillText(text,canvas.width/2-(canvas.width/2)+11, 30);
 		context.fillStyle = '#404040';
-		context.fillText(text, (canvas.width/2)-(canvas.width/12), 50);
+		context.fillText(text, (canvas.width/2)-(canvas.width/2)+10, 30);	
+*/
+		var text2 = 'Use the keyboard to create shapes';
+		var text3 = 'W: Crane A: Arc S: Star D: Diamond';
+		var text4 = 'Scroll down to stop the music';
 
-		context.fillStyle = '#800000';
-		context.fillText(text2, (canvas.width/2)-(canvas.width/6)-2, canvas.height-50);
-		context.fillStyle = '#000066';
-		context.fillText(text2,(canvas.width/2)-(canvas.width/6)+2, canvas.height-50);
+		context.font = '25px Palatino, serif';
+		context.fillStyle = '#8c8c8c';
+		context.fillText(text2, (canvas.width/2)-(canvas.width/2)+19, 30);
+		context.fillStyle = '#262626';
+		context.fillText(text2,(canvas.width/2)-(canvas.width/2)+21, 30);
 		context.fillStyle = '#404040';
-		context.fillText(text2, (canvas.width/2)-(canvas.width/6), canvas.height-50);
-
+		context.fillText(text2, (canvas.width/2)-(canvas.width/2)+20, 30);
+		
+		context.font = '20px Palatino, serif';
+		context.fillStyle = '#8c8c8c';
+		context.fillText(text3, (canvas.width/2)-(canvas.width/2)+19, 60);
+		context.fillStyle = '#262626';
+		context.fillText(text3,(canvas.width/2)-(canvas.width/2)+21, 60);
+		context.fillStyle = '#404040';
+		context.fillText(text3, (canvas.width/2)-(canvas.width/2)+20, 60);
+	
+		context.font = '25px Palatino, serif';
+		context.fillStyle = '#8c8c8c';
+		context.fillText(text4, (canvas.width/2)-(canvas.width/2)+19, 90);
+		context.fillStyle = '#262626';
+		context.fillText(text4,canvas.width/2-(canvas.width/2)+21, 90);
+		context.fillStyle = '#404040';
+		context.fillText(text4, (canvas.width/2)-(canvas.width/2)+20, 90);
 	}
 
       function resizeCanvas() {
