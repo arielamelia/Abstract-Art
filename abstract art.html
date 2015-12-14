@@ -3,11 +3,13 @@
 <head>
 <title>The Legend Concludes</title>
 <script>
-	  var canvas;
-	  var context;
-	  var shapes = [];
-	  var possibleShapes = ['diamond','circle', 'crane', 'triangle'];
-	  function Shape(x, y, color) {
+	var canvas;
+	var context;
+	var timer;
+	var shapes = [];
+	var possibleShapes = ['diamond','circle', 'crane', 'triangle'];
+	
+	function Shape(x, y, color) {
 		this.x = (Math.random()*100)+canvas.width/2;
 		this.y = (Math.random()*100)+canvas.height/2;
 		this.length = Math.random()*10+20;
@@ -17,44 +19,43 @@
 		this.color = color;
 		this.radius = Math.random()*20+20;
 		this.shape = possibleShapes[Math.floor(Math.random()*possibleShapes.length)];
-	  }
-      function init() {
+	}
+    
+    function init() {
         canvas = document.getElementById('canvas');
         context = canvas.getContext("2d");
  		window.addEventListener('keydown', newShape, false);
         window.addEventListener('resize', resizeCanvas, false);
         window.addEventListener('orientationchange', resizeCanvas, false);
-        //resizeCanvas();
-		func = setInterval(resizeCanvas, 20);
+        resizeCanvas();
+		timer = setInterval(resizeCanvas, 20);
 		canvas.onclick = function(event) {
 			resizeCanvas();
  		};
-
-      }
-
-	  function newShape() {
+    }
+	
+	function newShape() {
 	  	var x = this.x;
 	  	var y = this.y;
 		var colors = ['#ff0000', '#ff4d4d', '#ff4d4d', '#800000','#002db3','#3366ff','#809fff','#00134d','#85e085','#47d147','#1f7a1f','#0f3d0f'];
 		var color = colors[Math.floor(Math.random()*colors.length)];
 		shapes.push(new Shape(x, y, color));
-		}
+	}
 		
 	function degreesToRadians(degrees) {
 		return (degrees * Math.PI)/180;
 	}
-	 function drawDiamond(diamond){
+	
+	function drawDiamond(diamond){
 		context.globalCompositeOperation = 'lighter';
 		context.beginPath();
 		context.lineTo(diamond.x+(diamond.length), diamond.y-(diamond.length*2));
-	    context.lineTo(diamond.x+(diamond.length*2), diamond.y-(diamond.length));
-	    
+	    context.lineTo(diamond.x+(diamond.length*2), diamond.y-(diamond.length));    
 	    context.lineTo(diamond.x+(diamond.length*3), diamond.y-(diamond.length*2));
 	    context.lineTo(diamond.x+(diamond.length*2), diamond.y-(diamond.length*4));
 	    context.closePath();
 	    context.fillStyle = diamond.color;
 		context.fill();
-
 	}
 	
 	function drawTriangle(triangle){
@@ -74,7 +75,7 @@
 	    context.fillStyle = circle.color;
 	    context.fill();
 	}
-
+ 	
  	function drawCrane(crane){
 	 	context.globalCompositeOperation = 'lighter';
 		context.beginPath();
@@ -90,7 +91,6 @@
 	    
 	    context.lineTo(crane.x-(crane.length/.4), crane.y-(crane.length*1.6));
 	    context.lineTo(crane.x-crane.length, crane.y-(crane.length*.8));
-
 	    context.lineTo(crane.x+(crane.length*.6), crane.y-(crane.length*.6));
 	    context.lineTo(crane.x+(crane.length*.4), crane.y-(crane.length*.8));
 	    
@@ -99,6 +99,7 @@
 	    context.fillStyle = crane.color;
 	    context.fill();
 	}
+
 	function drawWords(words){
 		context.fillStyle = '#800000';
 		context.fillText('text', words.x,words.y);
@@ -109,7 +110,7 @@
 		context.fillStyle = 'red';
 		context.beginPath();
 		context.arc(canvas.width/2,canvas.height/2-(canvas.height/16+canvas.height/32), canvas.height/16, 0, degreesToRadians(360),true);
-	context.fill();	
+		context.fill();	
 		context.fillStyle = 'yellow';
 		context.beginPath();
 		context.arc(canvas.width/2-(canvas.height/16+canvas.height/32),canvas.height/2+canvas.height/24, canvas.height/16, 0, degreesToRadians(360),true);
@@ -134,65 +135,32 @@
 		context.beginPath();
 		context.arc(canvas.width/2,canvas.height/2, canvas.height/16, 0, degreesToRadians(360),true);
 		context.fill();
-		
-			
 	}
 
 function drawText(){ 
-		/*var text = 'Click to Begin';
+		var text = 'Use the keyboard to create shapes';
+		var text2 = 'Scroll down to stop the music';
 		context.font = '25px Palatino, serif';
 		context.fillStyle = '#8c8c8c';
-		context.fillText(text, (canvas.width/2)-(canvas.width/2)+9, 30);
+		context.fillText(text, (canvas.width/2)-(canvas.width/2)+19, 30);
 		context.fillStyle = '#262626';
-		context.fillText(text,canvas.width/2-(canvas.width/2)+11, 30);
-		context.fillStyle = '#404040';
-		context.fillText(text, (canvas.width/2)-(canvas.width/2)+10, 30);	
-*/
-		var text2 = 'Use the keyboard to create shapes';
-		var text3 = 'W: Crane A: Arc S: Star D: Diamond';
-		var text4 = 'Scroll down to stop the music';
-
-		context.font = '25px Palatino, serif';
-		context.fillStyle = '#8c8c8c';
-		context.fillText(text2, (canvas.width/2)-(canvas.width/2)+19, 30);
-		context.fillStyle = '#262626';
-		context.fillText(text2,(canvas.width/2)-(canvas.width/2)+21, 30);
+		context.fillText(text,(canvas.width/2)-(canvas.width/2)+21, 30);
 		context.fillStyle = '#404040';
 		context.fillText(text2, (canvas.width/2)-(canvas.width/2)+20, 30);
 		
-		context.font = '20px Palatino, serif';
-		context.fillStyle = '#8c8c8c';
-		context.fillText(text3, (canvas.width/2)-(canvas.width/2)+19, 60);
-		context.fillStyle = '#262626';
-		context.fillText(text3,(canvas.width/2)-(canvas.width/2)+21, 60);
-		context.fillStyle = '#404040';
-		context.fillText(text3, (canvas.width/2)-(canvas.width/2)+20, 60);
-	
 		context.font = '25px Palatino, serif';
 		context.fillStyle = '#8c8c8c';
-		context.fillText(text4, (canvas.width/2)-(canvas.width/2)+19, 90);
+		context.fillText(text2, (canvas.width/2)-(canvas.width/2)+19, 90);
 		context.fillStyle = '#262626';
-		context.fillText(text4,canvas.width/2-(canvas.width/2)+21, 90);
+		context.fillText(text2,canvas.width/2-(canvas.width/2)+21, 90);
 		context.fillStyle = '#404040';
-		context.fillText(text4, (canvas.width/2)-(canvas.width/2)+20, 90);
+		context.fillText(text2, (canvas.width/2)-(canvas.width/2)+20, 90);
 	}
-
       function resizeCanvas() {
         canvas.width = window.innerWidth-20;
         canvas.height = window.innerHeight-20;
 		fillBackgroundColor();
-		/*if(x=87){
-			drawDiamond();
-		}else if(x=65){
-			drawCircle();
-		}else if(x=83){
-			drawCrane();
-		}else if(x=68){
-			drawTriangle();
-		}else{
-			drawWords();
-		}
-		*/
+
 		for (var i=0; i<shapes.length; i++) {
 			if (shapes[i].shape == 'diamond') {
 				drawDiamond(shapes[i]);
@@ -208,7 +176,6 @@ function drawText(){
 				shapes[i].y += shapes[i].dy;
 		
 		}	
-
 		drawText();
 		drawFlower();	 
       }
@@ -218,13 +185,14 @@ function drawText(){
 		 context.fillRect(0, 0, canvas.width, canvas.height);
 	}
 	window.onload = init;
-
 </script>
 </head>
 <body>	
 <canvas id='canvas' width=500 height=500></canvas>
 <audio controls autoplay>
-  <source src="zeldasLullaby.mp3" type="audio/mp3">
+<source src="zeldaMedley.mp3" type="audio/mp3">
+<source src="zeldaMedley.wav" type="audio/wav">
 Your browser does not support the audio element.
 </audio>
 </body>	  
+Status 
